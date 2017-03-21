@@ -1,21 +1,33 @@
 package Aufgabenblatt01;
 
-public class Matrize{
+public class Matrix{
 	
+	/**
+	 *  Konstante die den Zahlenbereich definert,
+	 *  aus diesen Zahlen für die initialisierung 
+	 *  der Matrizen gewählt werden.
+	 */
 	final static int ZAHLEN_BEREICH = 10;
 	
 	private int m;
 	private int n;
 	private int feld[][];
 	
-	public Matrize(int m, int n) {
+	/**
+	 * Konstruktor
+	 */
+	public Matrix(int m, int n) {
 		feld = new int[m][n];
 		this.m = m;
 		this.n = n;
 		
+		// befülle Matrix mit zufälligen Zahlen aus dem Zahlenbereich
 		fuelleFeld();
 	}
 	
+	/**
+	 *  Funktion zur Initialensierung der Matrix.
+	 */
 	private void fuelleFeld(){
 		for(int i=0; i<m; i++){
 			for(int k=0; k<n; k++){
@@ -24,20 +36,26 @@ public class Matrize{
 		}
 	}
 	
-	public Matrize multipliziere(Matrize matrizeB) throws IncompatibleMatricesException{
+	/**
+	 * Multiplikation mit einer Matrix.
+	 * @param matrixB
+	 * @return Matrix (Produkt mit matrixB)
+	 * @throws IncompatibleMatricesException
+	 */
+	public Matrix multipliziere(Matrix matrixB) throws IncompatibleMatricesException{
 		
-		if( !pruefeKompatiblitaet(matrizeB) ){
+		if( !pruefeKompatiblitaet(matrixB) ){
 			throw new IncompatibleMatricesException("Die Matrizen sind nicht kompatibel.");
 		}
 		
-		Matrize ergebnis = new Matrize(m, matrizeB.getN());
+		Matrix ergebnis = new Matrix(m, matrixB.getN());
 		
 		for(int zeileA=0; zeileA<m; zeileA++){
-			for(int spalteB=0; spalteB<matrizeB.getN(); spalteB++){
+			for(int spalteB=0; spalteB<matrixB.getN(); spalteB++){
 				int wert = 0;
 				for(int i=0; i<n; i++){
 					int wertA = getValue(i, zeileA);
-					int wertB = matrizeB.getValue(spalteB, i);
+					int wertB = matrixB.getValue(spalteB, i);
 					wert += wertA * wertB;
 					ergebnis.setValue(spalteB, zeileA, wert);
 				}
@@ -47,7 +65,12 @@ public class Matrize{
 		return ergebnis;
 	}
 	
-	public boolean pruefeKompatiblitaet(Matrize b) {
+	/**
+	 * Prüft ob die Matrix b multiplizierbar ist.
+	 * @param b
+	 * @return boolean
+	 */
+	public boolean pruefeKompatiblitaet(Matrix b) {
 		return (n==b.getM());
 	}
 	
@@ -78,12 +101,15 @@ public class Matrize{
 	public int getN() {
 		return n;
 	}
-
+	
+	/*
+	 *	Hauptprogramm 
+	 */
 	public static void main(String[] args) {
 		
-		Matrize a = new Matrize(3, 3);
-		Matrize b = new Matrize(3, 2);
-		Matrize c = null;
+		Matrix a = new Matrix(3, 3);
+		Matrix b = new Matrix(3, 2);
+		Matrix c = null;
 		
 		try {
 			c = a.multipliziere(b);
