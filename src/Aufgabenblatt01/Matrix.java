@@ -1,5 +1,11 @@
 package Aufgabenblatt01;
 
+/**
+ * Vektormatrix.
+ * 
+ * @author Florian Heuer
+ *
+ */
 public class Matrix{
 	
 	/**
